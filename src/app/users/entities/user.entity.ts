@@ -1,9 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum USER_ROLE {
-  ADMIN = "admin",
-  CLIENT = "client",
-  OWNER = "owner",
+  ADMIN = 'admin',
+  CLIENT = 'client',
+  OWNER = 'owner',
 }
 
 @Entity('users')
@@ -35,14 +35,15 @@ export class User {
 
   @Column({
     type: 'text',
-    nullable: false
+    nullable: true,
+    default: null
   })
   address: string;
 
   @Column({
     type: 'enum',
     enum: USER_ROLE,
-    default: USER_ROLE.CLIENT
+    default: USER_ROLE.CLIENT,
   })
   role: USER_ROLE;
 }

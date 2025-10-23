@@ -9,6 +9,14 @@ import {
 } from 'typeorm';
 import { OrderGroup } from './order-group.entity';
 
+export enum ORDER_STATUS {
+  PENDING = 'pending',
+  PAID = 'paid',
+  SHIPPED = 'shipped',
+  DELIVERED = 'delivered',
+  CANCELLED = 'cancelled',
+}
+
 @Entity('orders')
 export class Order {
   @PrimaryGeneratedColumn()
@@ -22,9 +30,9 @@ export class Order {
   @JoinColumn({ name: 'productId' })
   product: Product;
 
-  @ManyToOne(() => OrderGroup, orderGroup => orderGroup.orders )
+  @ManyToOne(() => OrderGroup, (orderGroup) => orderGroup.orders)
   @JoinColumn({ name: 'orderGroupId' })
-  orderGroup: OrderGroup
+  orderGroup: OrderGroup;
 
   @Column({
     type: 'int',
@@ -41,7 +49,6 @@ export class Order {
     default: 0.0,
   })
   price: number;
-
 
   @Column({
     type: 'decimal',
@@ -63,4 +70,11 @@ export class Order {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
+
+  @Column({
+    type: 'enum',
+    enum: ORDER_STATUS,
+    default: ORDER_STATUS.PENDING,
+  })
+  status: ORDER_STATUS;
 }

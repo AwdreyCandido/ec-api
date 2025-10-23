@@ -18,8 +18,8 @@ export class Product {
   @JoinColumn({ name: 'storeId' })
   store: Store;
 
-  @OneToMany(()=> Review, review => review.product )
-  reviews:  Review[]
+  @OneToMany(() => Review, (review) => review.product)
+  reviews: Review[];
 
   @Column({ type: 'varchar', length: 60, nullable: false })
   name: string;
@@ -36,7 +36,7 @@ export class Product {
   })
   price: number;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true, default: null })
   imageUrl: string;
 
   @Column({ type: 'int', nullable: false, default: 0 })

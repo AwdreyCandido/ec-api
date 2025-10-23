@@ -22,6 +22,7 @@ export class Store {
     type: 'varchar',
     length: 255,
     nullable: true,
+    default: null
   })
   logoUrl: string;
 
