@@ -13,7 +13,8 @@ export class StoresService {
   ) {}
 
   create(createStoreDto: CreateStoreDto) {
-    return 'This action adds a new store';
+    const store = this.storesRepository.create(createStoreDto);
+    return this.storesRepository.save(store);
   }
 
   findAll() {
@@ -24,11 +25,12 @@ export class StoresService {
     return this.storesRepository.findOneBy({ id });
   }
 
-  update(id: number, updateStoreDto: UpdateStoreDto) {
-    return `This action updates a #${id} store`;
+  async update(id: number, updateStoreDto: UpdateStoreDto) {
+    await this.storesRepository.update(id, updateStoreDto);
+    return this.storesRepository.findOneBy({ id });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} store`;
+    return this.storesRepository.delete(id)
   }
 }

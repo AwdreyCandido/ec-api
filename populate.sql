@@ -65,3 +65,13 @@ VALUES
 (4, 3, 5, 'Som muito limpo e ótimo isolamento acústico.', NOW()),
 (1, 4, 5, 'Um clássico que nunca envelhece.', NOW()),
 (5, 5, 3, 'Boa qualidade, mas achei o preço um pouco alto.', NOW());
+(3, 1, 4, 'Funciona bem, mas o carregador esquenta um pouco.', NOW()),
+(2, 3, 5, 'Excelente qualidade de som! Uso todos os dias.', NOW()),
+(5, 2, 4, 'Notebook rápido, só peca um pouco na bateria.', NOW()),
+(4, 4, 5, 'História envolvente, recomendo muito.', NOW()),
+(3, 5, 2, 'Esperava mais pelo preço, acabamento simples.', NOW()),
+(1, 2, 5, 'Perfeito para o trabalho e estudos. Super leve.', NOW()),
+(2, 1, 3, 'Bom celular, mas o sistema trava às vezes.', NOW()),
+(5, 3, 5, 'Headset maravilhoso, ótimo microfone.', NOW()),
+(3, 4, 4, 'Livro muito bom, só achei o final previsível.', NOW()),
+(4, 5, 4, 'Qualidade boa e entrega rápida.', NOW());
