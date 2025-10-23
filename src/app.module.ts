@@ -9,14 +9,14 @@ import { StoresModule } from './app/stores/stores.module';
 import { AuthModule } from './app/auth/auth.module';
 import { ReviewsModule } from './app/reviews/reviews.module';
 import { UsersModule } from './app/users/users.module';
-import { AppDataSource } from 'typeorm-cli.config';
 import { createConnection } from 'mysql2/promise';
+import AppDataSource from 'typeorm-cli.config';
 
 async function createDatabase() {
   const connection = await createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: '1234',
     port: 3306,
   });
 
