@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ShoppingCart } from 'src/app/carts/entities/shopping-cart.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum USER_ROLE {
   ADMIN = 'admin',
@@ -10,6 +11,9 @@ export enum USER_ROLE {
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToOne(() => ShoppingCart, (cart) => cart.user, { cascade: true })
+  cart: ShoppingCart;
 
   @Column({
     type: 'varchar',
@@ -36,7 +40,7 @@ export class User {
   @Column({
     type: 'text',
     nullable: true,
-    default: null
+    default: null,
   })
   address: string;
 

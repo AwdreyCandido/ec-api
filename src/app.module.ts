@@ -11,6 +11,7 @@ import { ReviewsModule } from './app/reviews/reviews.module';
 import { UsersModule } from './app/users/users.module';
 import { createConnection } from 'mysql2/promise';
 import { AppDataSource } from 'typeorm-cli.config';
+import { CartsModule } from './app/carts/carts.module';
 
 async function createDatabase() {
   const connection = await createConnection({
@@ -39,6 +40,7 @@ async function createDatabase() {
         return { ...AppDataSource.options, autoLoadEntities: true };
       },
     }),
+    CartsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
