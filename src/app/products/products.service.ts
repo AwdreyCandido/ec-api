@@ -33,11 +33,14 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.productsRepository.find();
+    return this.productsRepository.find({ relations: ['reviews'] });
   }
 
   findOne(id: number) {
-    return this.productsRepository.findOneBy({ id });
+    return this.productsRepository.findOne({
+      where: { id },
+      relations: ['reviews'],
+    });
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {

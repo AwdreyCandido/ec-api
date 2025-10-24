@@ -1,9 +1,13 @@
+import { Product } from 'src/app/products/entities/product.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('stores')
 export class Store {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => Product, (product) => product.store)
+  products: Product[];
 
   @Column({
     type: 'varchar',
@@ -22,7 +26,7 @@ export class Store {
     type: 'varchar',
     length: 255,
     nullable: true,
-    default: null
+    default: null,
   })
   logoUrl: string;
 

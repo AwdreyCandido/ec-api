@@ -14,7 +14,7 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Store)
+  @ManyToOne(() => Store, (store) => store.products)
   @JoinColumn({ name: 'storeId' })
   store: Store;
 

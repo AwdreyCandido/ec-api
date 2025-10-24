@@ -19,7 +19,7 @@ export class UsersService {
     const user = this.usersRepository.create(createUserDto);
     await this.usersRepository.save(user);
 
-    const cart = this.shoppingCartsRepository.create({user});
+    const cart = this.shoppingCartsRepository.create({ user });
     await this.shoppingCartsRepository.save(cart);
 
     return await this.usersRepository.findOne({
@@ -33,7 +33,7 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return this.usersRepository.findOneBy({ id });
+    return this.usersRepository.findOne({ where: { id }, relations: ['cart'] });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

@@ -18,11 +18,16 @@ export class StoresService {
   }
 
   findAll() {
-    return this.storesRepository.find();
+    return this.storesRepository.find({
+      relations: ['products'],
+    });
   }
 
   findOne(id: number) {
-    return this.storesRepository.findOneBy({ id });
+    return this.storesRepository.findOne({
+      where: { id },
+      relations: ['products'],
+    });
   }
 
   async update(id: number, updateStoreDto: UpdateStoreDto) {
@@ -31,6 +36,6 @@ export class StoresService {
   }
 
   remove(id: number) {
-    return this.storesRepository.delete(id)
+    return this.storesRepository.delete(id);
   }
 }
