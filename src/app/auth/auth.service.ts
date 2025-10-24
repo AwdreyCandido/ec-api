@@ -1,26 +1,32 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import {
+  Body,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+  forwardRef,
+} from '@nestjs/common';
+import { UsersService } from '../users/users.service';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    @Inject(forwardRef(() => UsersService))
+    private usersService: UsersService,
+  ) {}
+
+  async signIn(loginDto: LoginDto) {
+    const user = await this.usersService.findOneByEmail(loginDto.email);
+
+    if (user?.password != loginDto.password) {
+      throw new UnauthorizedException();
+    }
+
+    const { password, ...result } = user;
+
+    return result;
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
+  async signUp(registerDto: RegisterDto) {}
 }

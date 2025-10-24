@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ShoppingCart } from '../carts/entities/shopping-cart.entity';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +14,8 @@ export class UsersService {
     private usersRepository: Repository<User>,
     @InjectRepository(ShoppingCart)
     private shoppingCartsRepository: Repository<ShoppingCart>,
+    @Inject(forwardRef(() => AuthService))
+    private authService: AuthService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -34,6 +37,13 @@ export class UsersService {
 
   findOne(id: number) {
     return this.usersRepository.findOne({ where: { id }, relations: ['cart'] });
+  }
+
+  findOneByEmail(email: string) {
+    return this.usersRepository.findOne({
+      where: { email },
+      relations: ['cart'],
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
