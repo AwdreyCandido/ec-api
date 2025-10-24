@@ -27,9 +27,22 @@ export class CartsService {
       relations: ['items'],
     });
     if (!cart) throw new NotFoundException(`Cart not found`);
-    const product = await this.productsRepository.findOneBy({ id: productId });
 
+    const product = await this.productsRepository.findOneBy({ id: productId });
     if (!product) throw new NotFoundException(`Prod not found`);
+
+    /* CHECK IF PRODUCT IS ALREADY IN THE CART */
+    const existingItem = cart.items.find(
+      (item) => item.product.id === productId,
+    );
+
+    if (existingItem) {
+      existingItem.quantity += quantity;
+      existingItem.totalPrice = existingItem.unitPrice * existingItem.quantity;
+      await this.cartItemsRepository.save(existingItem);
+      return existingItem;
+    }
+    /* --------------------------------------- */
 
     const cartItem = this.cartItemsRepository.create({
       cart,
@@ -42,5 +55,14 @@ export class CartsService {
     return this.cartItemsRepository.save(cartItem);
   }
 
-  getAllCartItems(id: number) {}
+  getAllCartItems(cartId: number) {
+    return this.shoppingCartsRepository.findOne({
+      where: { id: cartId },
+      relations: ['items', 'items.product'],
+    });
+  }
+
+  remove(productId: number) {
+    return this.cartItemsRepository.delete(productId);
+  }
 }

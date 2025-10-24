@@ -20,4 +20,14 @@ export class CartsController {
   create(@Body() AddCartItemDto: AddCartItemDto) {
     return this.cartsService.addItemToCart(AddCartItemDto);
   }
+
+  @Get(':id')
+  getAllCartItems(@Param('id') cartId: number) {
+    return this.cartsService.getAllCartItems(cartId);
+  }
+
+  @Delete(':id')
+  deleteCartItem(@Param('id') cartItemId: number) {
+    return this.cartsService.remove(cartItemId);
+  }
 }
