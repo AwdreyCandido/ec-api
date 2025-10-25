@@ -11,13 +11,15 @@ import { ReviewsModule } from './app/reviews/reviews.module';
 import { UsersModule } from './app/users/users.module';
 import { createConnection } from 'mysql2/promise';
 import { CartsModule } from './app/carts/carts.module';
-import { AppDataSource } from 'typeorm-cli.config';
+import AppDataSource from 'typeorm-cli.config';
+import { HashingProvider } from './app/auth/providers/hashing.provider';
+import { BcryptProvider } from './app/auth/providers/bcrypt.provider';
 
 async function createDatabase() {
   const connection = await createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: '1234',
     port: 3306,
   });
 
@@ -43,7 +45,13 @@ async function createDatabase() {
     CartsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: HashingProvider,
+      useClass: BcryptProvider,
+    },
+  ],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}

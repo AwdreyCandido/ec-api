@@ -37,7 +37,7 @@ export class CartsService {
     );
 
     if (existingItem) {
-      existingItem.quantity += quantity;
+      existingItem.quantity = quantity;
       existingItem.totalPrice = existingItem.unitPrice * existingItem.quantity;
       await this.cartItemsRepository.save(existingItem);
       return existingItem;

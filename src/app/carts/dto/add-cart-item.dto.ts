@@ -8,6 +8,6 @@ export class AddCartItemDto {
   productId: number;
 
   @IsInt()
-  @IsPositive()
-  quantity: number;
+  // @IsPositive()
+  quantity: number = 1;
 }
