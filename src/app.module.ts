@@ -11,19 +11,19 @@ import { ReviewsModule } from './app/reviews/reviews.module';
 import { UsersModule } from './app/users/users.module';
 import { createConnection } from 'mysql2/promise';
 import { CartsModule } from './app/carts/carts.module';
-import AppDataSource from 'typeorm-cli.config';
+import AppDataSource from 'src/typeorm-cli.config';
 import { HashingProvider } from './app/auth/providers/hashing.provider';
 import { BcryptProvider } from './app/auth/providers/bcrypt.provider';
 
 async function createDatabase() {
   const connection = await createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '1234',
+    host: 'sql.freedb.tech',
+    user: 'freedb_ecroot',
+    password: 'U76RTuf*TDB@YgA',
     port: 3306,
   });
 
-  await connection.query(`CREATE DATABASE IF NOT EXISTS \`ecommerce\`;`);
+  await connection.query(`CREATE DATABASE IF NOT EXISTS \`freedb_ecommerce-test\`;`);
   await connection.end();
 }
 

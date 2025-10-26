@@ -1,4 +1,4 @@
-USE ecommerce;
+USE `freedb_ecommerce-test`;
 
 -- ========================================
 -- 1. STORES
