@@ -5,8 +5,8 @@ import { Store } from './app/stores/entities/store.entity';
 import { Review } from './app/reviews/entities/review.entity';
 import { Order } from './app/orders/entities/order.entity';
 import { OrderGroup } from './app/orders/entities/order-group.entity';
-import { ShoppingCart } from 'src/app/carts/entities/shopping-cart.entity';
-import { CartItem } from 'src/app/carts/entities/cart-item.entity';
+import { ShoppingCart } from './app/carts/entities/shopping-cart.entity';
+import { CartItem } from './app/carts/entities/cart-item.entity';
 
 const AppDataSource = new DataSource({
   type: 'mysql',

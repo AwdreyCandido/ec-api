@@ -22,4 +22,20 @@ export class CreateProductDto {
 
   @IsNumber()
   stock: number;
+
+  constructor(
+    storeId: number,
+    name: string,
+    description: string,
+    price: number,
+    stock: number,
+    imageUrl?: string,
+  ) {
+    this.storeId = storeId;
+    this.name = name;
+    this.description = description;
+    this.price = price;
+    this.stock = stock;
+    this.imageUrl = imageUrl;
+  }
 }

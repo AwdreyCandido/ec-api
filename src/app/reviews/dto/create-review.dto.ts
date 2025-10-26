@@ -13,4 +13,16 @@ export class CreateReviewDto {
   @IsString()
   @IsNotEmpty()
   comment: string;
+
+  constructor(
+    userId: number,
+    productId: number,
+    rating: number,
+    comment: string,
+  ) {
+    this.userId = userId;
+    this.productId = productId;
+    this.rating = rating;
+    this.comment = comment;
+  }
 }

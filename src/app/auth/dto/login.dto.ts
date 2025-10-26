@@ -21,4 +21,9 @@ export class LoginDto {
       'Minimum eight characters, at least one letter, one number and one special character',
   })
   password: string;
+
+  constructor(email: string, password: string) {
+    this.email = email;
+    this.password = password;
+  }
 }

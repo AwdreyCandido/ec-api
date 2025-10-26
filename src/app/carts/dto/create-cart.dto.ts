@@ -6,4 +6,9 @@ export class CreateCartDto {
 
   @IsOptional()
   createdAt?: Date;
+
+  constructor(userId: number, createdAt?: Date) {
+    this.userId = userId;
+    this.createdAt = createdAt;
+  }
 }

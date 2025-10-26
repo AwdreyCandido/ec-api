@@ -9,11 +9,10 @@ import { StoresModule } from './app/stores/stores.module';
 import { AuthModule } from './app/auth/auth.module';
 import { ReviewsModule } from './app/reviews/reviews.module';
 import { UsersModule } from './app/users/users.module';
-import { createConnection } from 'mysql2/promise';
 import { CartsModule } from './app/carts/carts.module';
-import AppDataSource from 'src/typeorm-cli.config';
 import { HashingProvider } from './app/auth/providers/hashing.provider';
 import { BcryptProvider } from './app/auth/providers/bcrypt.provider';
+import AppDataSource from './typeorm-cli.config';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { BcryptProvider } from './app/auth/providers/bcrypt.provider';
     UsersModule,
     TypeOrmModule.forRootAsync({
       useFactory: async () => {
-
         return { ...AppDataSource.options, autoLoadEntities: true };
       },
     }),

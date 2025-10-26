@@ -8,9 +8,6 @@ export class CreateOrderDto {
   @IsNumber()
   productId: number;
 
-  // @IsNumber()
-  // orderGroupId: number;
-
   @IsInt()
   quantity: number;
 
@@ -25,4 +22,22 @@ export class CreateOrderDto {
 
   @IsEnum(ORDER_STATUS)
   status: ORDER_STATUS = ORDER_STATUS.PENDING;
+
+  constructor(
+    userId: number,
+    productId: number,
+    quantity: number,
+    price: number,
+    shipping: number,
+    totalAmount: number,
+    status?: ORDER_STATUS,
+  ) {
+    this.userId = userId;
+    this.productId = productId;
+    this.quantity = quantity;
+    this.price = price;
+    this.shipping = shipping;
+    this.totalAmount = totalAmount;
+    if (status) this.status = status;
+  }
 }

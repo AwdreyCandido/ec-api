@@ -9,4 +9,10 @@ export class OrdergroupDto {
 
   @IsNumber()
   totalAmount: number;
+
+  constructor(userId: number, totalShipping: number, totalAmount: number) {
+    this.userId = userId;
+    this.totalShipping = totalShipping;
+    this.totalAmount = totalAmount;
+  }
 }

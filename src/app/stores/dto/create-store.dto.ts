@@ -28,4 +28,20 @@ export class CreateStoreDto {
   @IsNumber()
   @IsOptional()
   ratings?: number;
+
+  constructor(
+    name: string,
+    description: string,
+    email: string,
+    phone: string,
+    logoUrl?: string,
+    ratings?: number,
+  ) {
+    this.name = name;
+    this.description = description;
+    this.email = email;
+    this.phone = phone;
+    this.logoUrl = logoUrl;
+    this.ratings = ratings;
+  }
 }
