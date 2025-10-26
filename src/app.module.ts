@@ -15,17 +15,17 @@ import AppDataSource from 'src/typeorm-cli.config';
 import { HashingProvider } from './app/auth/providers/hashing.provider';
 import { BcryptProvider } from './app/auth/providers/bcrypt.provider';
 
-async function createDatabase() {
-  const connection = await createConnection({
-    host: 'sql.freedb.tech',
-    user: 'freedb_ecroot',
-    password: 'U76RTuf*TDB@YgA',
-    port: 3306,
-  });
+// async function createDatabase() {
+//   const connection = await createConnection({
+//     host: 'sql.freedb.tech',
+//     user: 'freedb_ecroot',
+//     password: 'U76RTuf*TDB@YgA',
+//     port: 3306,
+//   });
 
-  await connection.query(`CREATE DATABASE IF NOT EXISTS \`freedb_ecommerce-test\`;`);
-  await connection.end();
-}
+//   await connection.query(`CREATE DATABASE IF NOT EXISTS \`freedb_ecommerce-test\`;`);
+//   await connection.end();
+// }
 
 @Module({
   imports: [
