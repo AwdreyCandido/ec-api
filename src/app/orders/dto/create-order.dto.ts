@@ -8,8 +8,8 @@ export class CreateOrderDto {
   @IsNumber()
   productId: number;
 
-  @IsNumber()
-  orderGroupId: number;
+  // @IsNumber()
+  // orderGroupId: number;
 
   @IsInt()
   quantity: number;
@@ -24,5 +24,5 @@ export class CreateOrderDto {
   totalAmount: number;
 
   @IsEnum(ORDER_STATUS)
-  role: ORDER_STATUS = ORDER_STATUS.PENDING;
+  status: ORDER_STATUS = ORDER_STATUS.PENDING;
 }
