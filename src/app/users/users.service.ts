@@ -1,7 +1,10 @@
 import {
+  BadRequestException,
   Inject,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
+  RequestTimeoutException,
   forwardRef,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,31 +27,84 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const user = this.usersRepository.create(createUserDto);
-    await this.usersRepository.save(user);
+    let exists: User | null = null;
+    let user: User;
 
-    const cart = this.shoppingCartsRepository.create({ user });
-    await this.shoppingCartsRepository.save(cart);
+    try {
+      exists = await this.usersRepository.findOne({
+        where: { email: createUserDto.email },
+      });
+    } catch (error) {
+      console.error('Database error on findOne:', error);
+      throw new RequestTimeoutException('Unable to process the request', {
+        description:
+          'Error connecting to the database while checking existing user',
+      });
+    }
 
-    return await this.usersRepository.findOne({
-      where: { id: user.id },
-      relations: ['cart'],
-    });
+    if (exists) {
+      throw new BadRequestException(
+        'The user already exists, please check your email',
+      );
+    }
+
+    try {
+      user = this.usersRepository.create(createUserDto);
+      await this.usersRepository.save(user);
+    } catch (error) {
+      console.error('Database error on save user:', error);
+      throw new InternalServerErrorException('Failed to create user', {
+        description: 'Error saving the user to the database',
+      });
+    }
+
+    try {
+      const cart = this.shoppingCartsRepository.create({ user });
+      await this.shoppingCartsRepository.save(cart);
+    } catch (error) {
+      console.error('Database error on save cart:', error);
+      throw new InternalServerErrorException('Failed to create shopping cart', {
+        description: 'Error saving the shopping cart to the database',
+      });
+    }
+
+    try {
+      return await this.usersRepository.findOne({
+        where: { id: user.id },
+        relations: ['cart'],
+      });
+    } catch (error) {
+      console.error('Database error on return user:', error);
+      throw new InternalServerErrorException('Failed to fetch user', {
+        description: 'Error retrieving the user with cart from the database',
+      });
+    }
   }
 
   findAll() {
     return this.usersRepository.find();
   }
 
-  findOne(id: number) {
-    return this.usersRepository.findOne({ where: { id }, relations: ['cart'] });
+  async findOne(id: number) {
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: ['cart'],
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
   }
 
-  findOneByEmail(email: string) {
-    return this.usersRepository.findOne({
+  async findOneByEmail(email: string) {
+    const user = await this.usersRepository.findOne({
       where: { email },
       relations: ['cart'],
     });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -63,7 +119,7 @@ export class UsersService {
     return result;
   }
 
-  remove(id: number) {
-    return this.usersRepository.delete({ id });
+  async remove(id: number) {
+    return await this.usersRepository.delete({ id });
   }
 }
