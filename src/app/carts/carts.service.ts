@@ -55,15 +55,16 @@ export class CartsService {
     return this.cartItemsRepository.save(cartItem);
   }
 
-  getAllCartItems(cartId: number) {
-    return this.shoppingCartsRepository.findOne({
+  async getAllCartItems(cartId: number) {
+    const cart = await this.shoppingCartsRepository.findOne({
       where: { id: cartId },
       relations: ['items', 'items.product'],
     });
+
+    return cart ?? [];
   }
 
   remove(productId: number) {
     return this.cartItemsRepository.delete(productId);
   }
-  
 }

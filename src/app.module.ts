@@ -12,6 +12,7 @@ import { UsersModule } from './app/users/users.module';
 import { CartsModule } from './app/carts/carts.module';
 import { HashingProvider } from './app/auth/providers/hashing.provider';
 import { BcryptProvider } from './app/auth/providers/bcrypt.provider';
+import { StripeModule } from './app/payment/stripe/stripe.module';
 import AppDataSource from './typeorm-cli.config';
 
 @Module({
@@ -28,6 +29,7 @@ import AppDataSource from './typeorm-cli.config';
       },
     }),
     CartsModule,
+    StripeModule,
   ],
   controllers: [AppController],
   providers: [
